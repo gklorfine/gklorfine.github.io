@@ -212,8 +212,8 @@ keybase:
   icon: icon-key
   prepend: "https://keybase.io/"
 download:
-  name: Download
-  icon: icon-box-add
+  name: CV
+  icon: icon-cv
 signal:
   name: Signal
   icon: icon-signal
@@ -261,3 +261,6 @@ discord:
 mastodon:
   name: Mastodon
   icon: icon-mastodon
+orcid:
+  name: ORCID
+  icon: icon-orcid

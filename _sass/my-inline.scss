@@ -2,3 +2,12 @@
 // .sidebar a {
 //   text-shadow: rgba(0, 0, 0, 0.25) 0.1rem 0.1rem 0.15rem;
 // }
+
+// Cover layout (home page, drawer open): keep tagline on one line.
+// max-width override only fires when hy-drawer[opened] — never in narrow sidebar mode.
+hy-drawer[opened].cover .sidebar-sticky {
+  max-width: max-content;
+}
+hy-drawer[opened].cover .sidebar-about p {
+  white-space: nowrap;
+}

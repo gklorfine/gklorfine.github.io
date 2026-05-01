@@ -1,3 +1,23 @@
+.icon-orcid::before {
+  font-family: initial !important;
+  content: '' !important;
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  background-color: currentColor;
+  -webkit-mask: url('/assets/img/orcid.svg') center / contain no-repeat;
+  mask: url('/assets/img/orcid.svg') center / contain no-repeat;
+  vertical-align: -0.1em;
+}
+
+.icon-cv::before {
+  font-family: var(--font-family-heading) !important;
+  content: 'CV' !important;
+  font-size: 1em;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
 .dl-table {
   a {
     @supports ((text-decoration-thickness: initial) and (text-underline-offset: initial)) {
