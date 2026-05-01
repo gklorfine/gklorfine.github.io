@@ -1,3 +1,119 @@
+<script>
+  (function() {
+    function addHomeLink() {
+      if (document.getElementById('_nav-home')) return;
+      var bar = document.querySelector('#_navbar .nav-btn-bar');
+      if (!bar) return;
+      var a = document.createElement('a');
+      a.id = '_nav-home';
+      a.href = '/';
+      a.className = 'nav-btn nav-home-link';
+      a.textContent = 'Home';
+      var menu = bar.querySelector('#_menu');
+      if (menu) menu.after(a);
+    }
+    addHomeLink();
+    document.getElementById('_pushState').addEventListener('hy-push-state-after', addHomeLink);
+  })();
+</script>
+
+<script>
+  document.addEventListener('submit', function(e) {
+    var form = e.target.closest('.contact-form');
+    if (!form) return;
+    e.preventDefault();
+    fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    }).then(function(res) {
+      if (res.ok) {
+        form.innerHTML = '<p class="contact-thanks">Thank you! I will be in touch shortly.</p>';
+      } else {
+        form.innerHTML = '<p class="contact-thanks">Something went wrong. Please email me directly.</p>';
+      }
+    }).catch(function() {
+      form.innerHTML = '<p class="contact-thanks">Something went wrong. Please email me directly.</p>';
+    });
+  });
+</script>
+
+<img id="ringo-popup" src="/assets/img/Ringo.png" alt="Ringo">
+<nav id="js-toc" aria-label="Table of contents"></nav>
+<script>
+  (function() {
+    var nav = document.getElementById('js-toc');
+
+    function buildTOC() {
+      nav.innerHTML = '';
+
+      if (!window.matchMedia('(min-width: 104rem)').matches) return;
+      if (!document.querySelector('article.page')) return;
+
+      var items = [];
+
+      var pageTitle = document.querySelector('article.page h1.page-title');
+      if (pageTitle) items.push({ text: pageTitle.textContent.trim(), href: '#' });
+
+      document.querySelectorAll('article.page h1:not(.page-title), article.page h2').forEach(function(h) {
+        if (!h.id) return;
+        var clone = h.cloneNode(true);
+        clone.querySelectorAll('a, span').forEach(function(el) { el.remove(); });
+        items.push({ text: clone.textContent.trim(), href: '#' + h.id });
+      });
+
+      if (!items.length) return;
+
+      var label = document.createElement('p');
+      label.textContent = 'TABLE OF CONTENTS';
+      nav.appendChild(label);
+
+      var ul = document.createElement('ol');
+      items.forEach(function(item, i) {
+        var li = document.createElement('li');
+        var a = document.createElement('a');
+        a.href = item.href;
+        a.textContent = item.text;
+        li.appendChild(a);
+        ul.appendChild(li);
+      });
+      nav.appendChild(ul);
+    }
+
+    buildTOC();
+    document.getElementById('_pushState').addEventListener('hy-push-state-after', buildTOC);
+    window.addEventListener('resize', buildTOC, { passive: true });
+  })();
+</script>
+<script>
+  (function() {
+    var popup = document.getElementById('ringo-popup');
+
+    function attach() {
+      document.querySelectorAll('.photo-tooltip').forEach(function(el) {
+        el.addEventListener('mouseenter', function(e) {
+          var r = el.getBoundingClientRect();
+          popup.style.left = Math.min(r.left + r.width / 2 - 80, window.innerWidth - 168) + 'px';
+          popup.style.top  = (r.top - 221) + 'px';
+          popup.style.display = 'block';
+        });
+        el.addEventListener('mouseleave', function() { popup.style.display = 'none'; });
+        el.addEventListener('click', function() {
+          popup.style.display = popup.style.display === 'block' ? 'none' : 'block';
+          if (popup.style.display === 'block') {
+            var r = el.getBoundingClientRect();
+            popup.style.left = Math.min(r.left + r.width / 2 - 80, window.innerWidth - 168) + 'px';
+            popup.style.top  = (r.top - 221) + 'px';
+          }
+        });
+      });
+    }
+
+    attach();
+    document.getElementById('_pushState').addEventListener('hy-push-state-after', attach);
+  })();
+</script>
+
 <a id="scroll-indicator" href="{{ '/' | relative_url }}" aria-label="About me">
   <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
     <polyline points="9 18 15 12 9 6"></polyline>

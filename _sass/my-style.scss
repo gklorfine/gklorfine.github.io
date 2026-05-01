@@ -1,3 +1,125 @@
+// Consistent hover colour across all navbar buttons
+#_navbar .nav-btn:hover {
+  color: var(--body-color) !important;
+}
+
+// Remove focus ring on navbar buttons
+#_navbar .nav-btn:focus,
+#_navbar .nav-btn:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.nav-home-link {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  width: auto !important;
+  padding: 0 1.25rem !important;
+  text-decoration: none !important;
+  border-color: var(--border-color) !important;
+  color: var(--menu-text);
+}
+
+.contact-form {
+  .form-group {
+    margin-bottom: 1rem;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 0.25rem;
+    font-weight: bold;
+    font-size: 0.9rem;
+  }
+
+  input, textarea {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background: var(--body-bg);
+    color: var(--body-color);
+    font-family: inherit;
+    font-size: 1rem;
+    box-sizing: border-box;
+
+    &:focus {
+      outline: none;
+      border-color: var(--accent-color);
+    }
+  }
+
+  textarea { resize: vertical; }
+
+  .contact-thanks {
+    text-align: center;
+    padding: 2rem 0;
+    font-size: 1.1rem;
+  }
+}
+
+// Custom fixed TOC — only rendered by JS at 104rem+, so display:none is a safety net
+#js-toc {
+  display: none;
+
+  @media (min-width: 104rem) {
+    display: block;
+    position: fixed;
+    top: 8rem;
+    right: 2rem;
+    width: 14rem;
+    z-index: 10;
+    font-size: 0.8rem;
+
+    p {
+      color: var(--gray);
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.5rem;
+    }
+
+    ol {
+      list-style: decimal;
+      padding-left: 1.25rem;
+      margin: 0;
+    }
+
+    li + li { margin-top: 0.25rem; }
+
+    a {
+      color: var(--gray-text);
+      text-decoration: none;
+      &:hover { color: var(--body-color); }
+    }
+  }
+}
+
+// Divider line under content headings (not the page title, which has its own divider).
+// width: 100% cancels Hydejack's large-heading expansion so the border matches the .hr div width.
+article.page h1:not(.page-title) {
+  width: 100%;
+  padding-bottom: .5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.photo-tooltip {
+  cursor: pointer;
+  border-bottom: 1px dotted currentColor;
+}
+
+#ringo-popup {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  pointer-events: none;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  width: 160px;
+  height: 213px;
+  object-fit: cover;
+}
+
 // Hide Hydejack's built-in swipe finger.
 #_swipe {
   display: none;
