@@ -1,3 +1,54 @@
+// Hide Hydejack's built-in swipe finger.
+#_swipe {
+  display: none;
+}
+
+#scroll-indicator {
+  position: fixed;
+  top: clamp(2rem, 6vw, 4rem);
+  right: clamp(2rem, 6vw, 4rem);
+  z-index: 9999;
+  color: rgba(255, 255, 255, 0.85);
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.62);
+  border-radius: 50%;
+  padding: 0.35rem;
+  cursor: pointer;
+  line-height: 0;
+  text-decoration: none;
+  opacity: 0;
+  pointer-events: none;
+  transition: background-color 0.2s, color 0.2s, opacity 0.5s;
+
+  svg { display: block; }
+
+  &.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+    animation: scroll-bounce 2s ease-in-out infinite;
+  }
+
+  &:hover,
+  &:focus-visible {
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.92);
+  }
+
+  &:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 0.25rem;
+  }
+}
+
+@keyframes scroll-bounce {
+  0%, 100% {
+    transform: translateX(0) scale(1);
+  }
+  50% {
+    transform: translateX(16px) scale(1.12);
+  }
+}
+
 .icon-orcid::before {
   font-family: initial !important;
   content: '' !important;

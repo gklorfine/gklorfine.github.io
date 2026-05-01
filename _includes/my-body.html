@@ -1,3 +1,120 @@
+<a id="scroll-indicator" href="{{ '/' | relative_url }}" aria-label="About me">
+  <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="9 18 15 12 9 6"></polyline>
+  </svg>
+</a>
+<script>
+  (function() {
+    var indicator = document.getElementById('scroll-indicator');
+    var pushState = document.getElementById('_pushState');
+    var storageKey = 'show-home-content';
+    var pendingHomeContent = false;
+    var dismissedForCurrentOpen = false;
+
+    if (!indicator) return;
+
+    function getStoredItem(key) {
+      try {
+        return window.sessionStorage && window.sessionStorage.getItem(key);
+      } catch (error) {
+        return null;
+      }
+    }
+
+    function setStoredItem(key) {
+      pendingHomeContent = true;
+      try {
+        if (window.sessionStorage) window.sessionStorage.setItem(key, 'true');
+      } catch (error) {}
+    }
+
+    function removeStoredItem(key) {
+      pendingHomeContent = false;
+      try {
+        if (window.sessionStorage) window.sessionStorage.removeItem(key);
+      } catch (error) {}
+    }
+
+    function shouldShowHomeContent() {
+      return pendingHomeContent || getStoredItem(storageKey);
+    }
+
+    function isGreenGradientActive() {
+      var drawer = document.getElementById('_drawer');
+
+      return drawer && drawer.classList.contains('cover') && (drawer.opened || drawer.hasAttribute('opened'));
+    }
+
+    function updateIndicator() {
+      var isActive = isGreenGradientActive();
+
+      if (!isActive) dismissedForCurrentOpen = false;
+
+      indicator.classList.toggle('is-visible', isActive && !dismissedForCurrentOpen && !shouldShowHomeContent());
+    }
+
+    function updateIndicatorSoon() {
+      window.requestAnimationFrame(updateIndicator);
+    }
+
+    function showHomeContent() {
+      var drawer = document.getElementById('_drawer');
+
+      dismissedForCurrentOpen = true;
+      removeStoredItem(storageKey);
+      indicator.classList.remove('is-visible');
+
+      if (drawer) {
+        drawer.removeAttribute('opened');
+
+        if (typeof drawer.close === 'function') {
+          drawer.close();
+        }
+      }
+    }
+
+    if (shouldShowHomeContent()) {
+      showHomeContent();
+    }
+
+    indicator.addEventListener('click', function(event) {
+      var target = new URL(indicator.href, window.location.href);
+      var current = new URL(window.location.href);
+      var isHome = target.origin === current.origin && target.pathname === current.pathname;
+
+      setStoredItem(storageKey);
+
+      if (isHome) {
+        event.preventDefault();
+        showHomeContent();
+      }
+    });
+
+    if (pushState) {
+      pushState.addEventListener('hy-push-state-after', function() {
+        if (shouldShowHomeContent()) {
+          showHomeContent();
+        } else {
+          updateIndicatorSoon();
+        }
+      });
+    }
+
+    document.addEventListener('init', updateIndicatorSoon, true);
+    document.addEventListener('transitioned', updateIndicatorSoon, true);
+
+    if (window.MutationObserver) {
+      new MutationObserver(updateIndicatorSoon).observe(document.documentElement, {
+        subtree: true,
+        attributes: true,
+        attributeFilter: ['class', 'opened']
+      });
+    }
+
+    updateIndicatorSoon();
+  })();
+</script>
+
 <!--
 Code for integrating CloudFlare's email protection with Hydejack's single page app loading.
 -->
