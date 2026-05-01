@@ -64,12 +64,21 @@
       removeStoredItem(storageKey);
       indicator.classList.remove('is-visible');
 
-      if (drawer) {
+      function closeDrawer() {
+        if (!drawer) return;
+
+        drawer.opened = false;
         drawer.removeAttribute('opened');
 
         if (typeof drawer.close === 'function') {
           drawer.close();
         }
+      }
+
+      closeDrawer();
+
+      if (window.customElements && typeof window.customElements.whenDefined === 'function') {
+        window.customElements.whenDefined('hy-drawer').then(closeDrawer);
       }
     }
 
