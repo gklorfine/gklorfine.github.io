@@ -4,10 +4,12 @@
 // }
 
 // Cover layout (home page, drawer open): keep tagline on one line.
-// max-width override only fires when hy-drawer[opened] — never in narrow sidebar mode.
-hy-drawer[opened].cover .sidebar-sticky {
-  max-width: max-content;
-}
-hy-drawer[opened].cover .sidebar-about p {
-  white-space: nowrap;
+// Restricted to desktop (64em+) so mobile drawer lets the tagline wrap.
+@media (min-width: 64em) {
+  hy-drawer[opened].cover .sidebar-sticky {
+    max-width: max-content;
+  }
+  hy-drawer[opened].cover .sidebar-about p {
+    white-space: nowrap;
+  }
 }
