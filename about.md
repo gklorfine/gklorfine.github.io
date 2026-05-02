@@ -1,6 +1,7 @@
 ---
 layout: about
 sitemap: false
+redirect_to: /
 image: /assets/img/blog/hydejack-9.jpg
 description: >
   A boutique Jekyll theme for hackers, nerds, and academics,

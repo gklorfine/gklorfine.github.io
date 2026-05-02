@@ -1,0 +1,8 @@
+{% seo title=false %}
+{% if page.cover %}
+<title>{{ site.title }}</title>
+{% elsif page.title %}
+<title>{{ page.title }} | {{ site.title }}</title>
+{% else %}
+<title>{{ site.title }}</title>
+{% endif %}
