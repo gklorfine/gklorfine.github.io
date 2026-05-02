@@ -3,13 +3,24 @@
 //   text-shadow: rgba(0, 0, 0, 0.25) 0.1rem 0.1rem 0.15rem;
 // }
 
-// Cover layout (home page, drawer open): keep tagline on one line.
-// Restricted to desktop (64em+) so mobile drawer lets the tagline wrap.
+.sidebar-about p {
+  max-width: 18rem;
+  margin-left: auto;
+  margin-right: auto;
+  text-wrap: balance;
+  transition: max-width 500ms ease;
+}
+
+// Cover layout (home page, drawer open): give the tagline room without
+// relying on a hard nowrap, so it can condense into the sidebar smoothly.
 @media (min-width: 64em) {
   hy-drawer[opened].cover .sidebar-sticky {
     max-width: max-content;
   }
   hy-drawer[opened].cover .sidebar-about p {
-    white-space: nowrap;
+    max-width: 42rem;
+  }
+  hy-drawer[opened].cover.is-condensing .sidebar-about p {
+    max-width: 18rem;
   }
 }

@@ -121,6 +121,62 @@
 </a>
 <script>
   (function() {
+    var hiddenMain = null;
+    var restoreTimer = 0;
+
+    function isCoverTitleClick(event) {
+      var title = event.target.closest && event.target.closest('.sidebar-title');
+      var drawer = document.getElementById('_drawer');
+
+      return title && drawer && drawer.classList.contains('cover') && (drawer.opened || drawer.hasAttribute('opened'));
+    }
+
+    function hideCurrentMain(event) {
+      if (!isCoverTitleClick(event)) return;
+
+      document.getElementById('_drawer').classList.add('is-condensing');
+
+      hiddenMain = document.getElementById('_main');
+      if (!hiddenMain) return;
+
+      hiddenMain.style.opacity = '0';
+      hiddenMain.style.visibility = 'hidden';
+
+      window.clearTimeout(restoreTimer);
+      restoreTimer = window.setTimeout(restoreCurrentMain, 8000);
+    }
+
+    function restoreCurrentMain() {
+      var drawer = document.getElementById('_drawer');
+      if (drawer) drawer.classList.remove('is-condensing');
+
+      if (hiddenMain && document.getElementById('_main') === hiddenMain) {
+        hiddenMain.style.opacity = '';
+        hiddenMain.style.visibility = '';
+      }
+      hiddenMain = null;
+      window.clearTimeout(restoreTimer);
+    }
+
+    document.addEventListener('pointerdown', hideCurrentMain, true);
+    document.addEventListener('click', hideCurrentMain, true);
+
+    var pushState = document.getElementById('_pushState');
+    var drawer = document.getElementById('_drawer');
+
+    if (drawer) {
+      drawer.addEventListener('hy-drawer-transitioned', function() {
+        drawer.classList.remove('is-condensing');
+      });
+    }
+
+    if (pushState) {
+      pushState.addEventListener('hy-push-state-networkerror', restoreCurrentMain);
+    }
+  })();
+</script>
+<script>
+  (function() {
     var indicator = document.getElementById('scroll-indicator');
     var pushState = document.getElementById('_pushState');
     var storageKey = 'show-home-content';
