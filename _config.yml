@@ -131,6 +131,12 @@ defaults:
     values:
       sitemap:         false
 
+  # Don't include downloadable PDFs, such as the CV, in the sitemap.
+  - scope:
+      path:            "assets/**/*.pdf"
+    values:
+      sitemap:         false
+
   # Don't include licenses in sitemap (feel free to delete)
   - scope:
       path:            licenses/
