@@ -124,15 +124,15 @@
     var hiddenMain = null;
     var restoreTimer = 0;
 
-    function isCoverTitleClick(event) {
-      var title = event.target.closest && event.target.closest('.sidebar-title');
+    function isCoverRevealClick(event) {
+      var trigger = event.target.closest && event.target.closest('.sidebar-title, .sidebar-about > a[href="/"]');
       var drawer = document.getElementById('_drawer');
 
-      return title && drawer && drawer.classList.contains('cover') && (drawer.opened || drawer.hasAttribute('opened'));
+      return trigger && drawer && drawer.classList.contains('cover') && (drawer.opened || drawer.hasAttribute('opened'));
     }
 
     function hideCurrentMain(event) {
-      if (!isCoverTitleClick(event)) return;
+      if (!isCoverRevealClick(event)) return;
 
       document.getElementById('_drawer').classList.add('is-condensing');
 
