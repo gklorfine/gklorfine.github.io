@@ -95,6 +95,14 @@
   }
 }
 
+@media screen and (min-width: 54em) {
+  .content { max-width: 50rem; }
+}
+
+@media screen and (min-width: 86em) {
+  .content { max-width: 56rem; }
+}
+
 // Divider line under content headings (not the page title, which has its own divider).
 // width: 100% cancels Hydejack's large-heading expansion so the border matches the .hr div width.
 article.page h1:not(.page-title) {
