@@ -1,19 +1,31 @@
 <script>
   (function() {
-    function addHomeLink() {
-      if (document.getElementById('_nav-home')) return;
+    // Text links shown in the top navbar, in order.
+    var links = [
+      { id: '_nav-home', href: '/', text: 'Home' },
+      { id: '_nav-rpkgs', href: '/r-packages/', text: 'R Packages' }
+    ];
+
+    function addNavLinks() {
       var bar = document.querySelector('#_navbar .nav-btn-bar');
       if (!bar) return;
-      var a = document.createElement('a');
-      a.id = '_nav-home';
-      a.href = '/';
-      a.className = 'nav-btn nav-home-link';
-      a.textContent = 'Home';
-      var menu = bar.querySelector('#_menu');
-      if (menu) menu.after(a);
+      var prev = bar.querySelector('#_menu');
+      if (!prev) return;
+      links.forEach(function(link) {
+        var a = document.getElementById(link.id);
+        if (!a) {
+          a = document.createElement('a');
+          a.id = link.id;
+          a.href = link.href;
+          a.className = 'nav-btn nav-home-link';
+          a.textContent = link.text;
+          prev.after(a);
+        }
+        prev = a;
+      });
     }
-    addHomeLink();
-    document.getElementById('_pushState').addEventListener('hy-push-state-after', addHomeLink);
+    addNavLinks();
+    document.getElementById('_pushState').addEventListener('hy-push-state-after', addNavLinks);
   })();
 </script>
 

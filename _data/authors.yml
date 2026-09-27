@@ -9,7 +9,7 @@ author1:
   # Markdown enabled, can use multiple paragraphs (enabled by `|`)
   about:             |
     I'm a graduate student in the Quantitative Methods program at York University, Toronto, Canada. 
-    My research thus far has focused on R package development, the (mis)use of statistical methods, and reproducibility. 
+    My research thus far has focused on [R package development](https://gavinklorfine.com/r-packages/), the (mis)use of statistical methods, and reproducibility. 
     I am also interested in statistical programming more broadly, with a focus on R and Python. When I'm not in the lab,
     I am usually playing guitar or spending time with my dog, <span class="photo-tooltip">Ringo</span>.
 
